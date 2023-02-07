@@ -13,9 +13,9 @@ class AuthController extends GetxController {
 
   void login(String email, String password) async {
     try {
-      final credential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      print(credential);
+      Get.offAllNamed(NameRoute.home);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.snackbar(
@@ -32,12 +32,10 @@ class AuthController extends GetxController {
 
   void register(String email, String password) async {
     try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print(credential);
       Get.offAllNamed(NameRoute.login);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -60,5 +58,6 @@ class AuthController extends GetxController {
 
   void logout() async {
     await auth.signOut();
+    Get.offAllNamed(NameRoute.login);
   }
 }

@@ -22,11 +22,10 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  final authC = Get.put(AuthController(), permanent: true);
   @override
   Widget build(BuildContext context) {
-    final authC = Get.put(AuthController(), permanent: true);
     final textClogin = Get.put(TextfieldControllerLogin());
     final textCregister = Get.put(TextfieldControllerRegister());
     return StreamBuilder<User?>(
