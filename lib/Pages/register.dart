@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:my_apps_with_firebase_1/controller/auth_controller.dart';
+import 'package:my_apps_with_firebase_1/controller/textfieldC_register.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authC = Get.find<AuthController>();
+    final textC = Get.find<TextfieldControllerRegister>();
     return Scaffold(
       appBar: AppBar(
         title: Text("Register"),
@@ -18,6 +21,7 @@ class RegisterPage extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                controller: textC.emailC2,
                 decoration: InputDecoration(
                   labelText: "Email",
                   border: OutlineInputBorder(),
@@ -27,6 +31,7 @@ class RegisterPage extends StatelessWidget {
                 height: 20,
               ),
               TextField(
+                controller: textC.passwordC2,
                 decoration: InputDecoration(
                   labelText: "Email",
                   border: OutlineInputBorder(),
@@ -36,7 +41,9 @@ class RegisterPage extends StatelessWidget {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  authC.register(textC.emailC2.text, textC.passwordC2.text);
+                },
                 child: Text("Register"),
               )
             ],

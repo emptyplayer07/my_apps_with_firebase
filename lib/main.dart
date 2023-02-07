@@ -10,13 +10,14 @@ import 'package:my_apps_with_firebase_1/Routes/name_route.dart';
 import 'package:my_apps_with_firebase_1/Routes/route.dart';
 import 'package:my_apps_with_firebase_1/controller/auth_controller.dart';
 import 'package:my_apps_with_firebase_1/controller/textfieldC_login.dart';
+import 'package:my_apps_with_firebase_1/controller/textfieldC_register.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseAppCheck.instance.activate(
-    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
-  );
+  // await FirebaseAppCheck.instance.activate(
+  //   webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+  // );
   runApp(MyApp());
 }
 
@@ -27,10 +28,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final authC = Get.put(AuthController(), permanent: true);
     final textClogin = Get.put(TextfieldControllerLogin());
+    final textCregister = Get.put(TextfieldControllerRegister());
     return StreamBuilder<User?>(
       stream: authC.streamAuthStatus(),
       builder: (context, snapshot) {
-        print(snapshot.data);
         if (snapshot.connectionState == ConnectionState.active) {
           return GetMaterialApp(
             title: "Apps",

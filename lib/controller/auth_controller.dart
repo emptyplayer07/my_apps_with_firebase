@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:my_apps_with_firebase_1/Routes/name_route.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -12,8 +13,9 @@ class AuthController extends GetxController {
 
   void login(String email, String password) async {
     try {
-      await FirebaseAuth.instance
+      final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      print(credential);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.snackbar(
@@ -28,7 +30,34 @@ class AuthController extends GetxController {
     }
   }
 
-  void register() {}
+  void register(String email, String password) async {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      print(credential);
+      Get.offAllNamed(NameRoute.login);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        Get.snackbar(
+          "Warning",
+          "Passwordmu terlalu lemah bro..",
+          duration: const Duration(seconds: 2),
+        );
+      } else if (e.code == 'email-already-in-use') {
+        Get.snackbar(
+          "warning",
+          "Email $email sudah ada",
+          duration: const Duration(seconds: 2),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   void logout() async {
     await auth.signOut();
   }
