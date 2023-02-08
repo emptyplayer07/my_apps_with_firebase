@@ -13,30 +13,61 @@ class AuthController extends GetxController {
 
   void login(String email, String password) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      Get.offAllNamed(NameRoute.home);
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      if (userCredential.user!.emailVerified) {
+        Get.offAllNamed(NameRoute.home);
+      } else {
+        Get.defaultDialog(
+          title: "Warning",
+          middleText: "Email $email belum diverifikasi, verifikasi ulang?",
+          onConfirm: () {
+            userCredential.user!.sendEmailVerification();
+            Get.back();
+          },
+          textConfirm: "Ya",
+          onCancel: () {
+            Get.back();
+          },
+          textCancel: "Tidak",
+        );
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.snackbar(
           "Email salah",
-          "Periksa email anda lagi lah broo...",
+          "Periksa email anda lagi",
           duration: const Duration(seconds: 2),
         );
       } else if (e.code == 'wrong-password') {
-        Get.snackbar("Password salah ", "Coba Periksa lagi deh password mu",
+        Get.snackbar("Password salah ", "Periksa password anda lagi",
             duration: const Duration(seconds: 2));
       }
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan",
+        middleText: "Silahkan tutup aplikasinya lagi lalu masuk kembali",
+      );
     }
   }
 
   void register(String email, String password) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Get.offAllNamed(NameRoute.login);
+      await userCredential.user!.sendEmailVerification();
+      Get.defaultDialog(
+        title: "Verification",
+        middleText:
+            "Kami sudah mengirimkan email verification ke email $email, silahkan verifikasi terlebih dahulu",
+        onConfirm: () {
+          Get.back();
+          Get.back();
+        },
+        textConfirm: "Ya, saya mengerti",
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         Get.snackbar(
@@ -47,12 +78,15 @@ class AuthController extends GetxController {
       } else if (e.code == 'email-already-in-use') {
         Get.snackbar(
           "warning",
-          "Email $email sudah ada",
+          "Email $email sudah digunakan",
           duration: const Duration(seconds: 2),
         );
       }
     } catch (e) {
-      print(e);
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan",
+        middleText: "silahkan ulangi lagi proses daftarnya",
+      );
     }
   }
 

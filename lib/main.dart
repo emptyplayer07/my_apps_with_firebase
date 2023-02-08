@@ -35,7 +35,9 @@ class MyApp extends StatelessWidget {
           return GetMaterialApp(
             title: "Apps",
             //initialRoute: NameRoute.login,
-            home: snapshot.data != null ? HomePage() : LoginPage(),
+            home: snapshot.data != null && snapshot.data!.emailVerified
+                ? HomePage()
+                : LoginPage(),
             getPages: AppRoute.pages,
           );
         }
