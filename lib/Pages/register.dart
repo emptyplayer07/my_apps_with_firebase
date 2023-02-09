@@ -33,7 +33,7 @@ class RegisterPage extends StatelessWidget {
               TextField(
                 controller: textC.passwordC2,
                 decoration: InputDecoration(
-                  labelText: "Email",
+                  labelText: "Password",
                   border: OutlineInputBorder(),
                 ),
               ),
