@@ -11,15 +11,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authC = Get.find<AuthController>();
     final pageIndexC = Get.find<PageIndexController>();
+    pageIndexC.pageIndex.value = 0;
     return Scaffold(
       appBar: AppBar(
         title: Text("Welcome to the junggle"),
         actions: [
           IconButton(
-            onPressed: () {
-              authC.logout();
-            },
-            icon: Icon(Icons.logout),
+            onPressed: () {},
+            icon: Icon(Icons.info),
           )
         ],
       ),

@@ -14,6 +14,15 @@ class AuthController extends GetxController {
     return auth.authStateChanges();
   }
 
+  getDataUser() {
+    final user = auth.currentUser;
+
+    if (user != null) {
+      final email2 = user.email;
+      return email2;
+    }
+  }
+
   void login(String email, String password) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
@@ -111,7 +120,6 @@ class AuthController extends GetxController {
   }
 
   void resetPassword(String email) async {
-    final user = auth.currentUser;
     if (email != "" && GetUtils.isEmail(email)) {
       // if (user != null) {
       await auth.sendPasswordResetEmail(email: email);

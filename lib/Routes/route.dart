@@ -26,11 +26,14 @@ class AppRoute extends GetxController {
       name: NameRoute.login,
       page: () => LoginPage(),
       binding: TextfieldBindingLogin(),
+      transition: Transition.size,
     ),
     GetPage(
-        name: NameRoute.register,
-        page: () => const RegisterPage(),
-        binding: TextfieldBindingRegister()),
+      name: NameRoute.register,
+      page: () => const RegisterPage(),
+      binding: TextfieldBindingRegister(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage(
         name: NameRoute.reset_pass,
         page: () => const ResetPasswordPage(),
