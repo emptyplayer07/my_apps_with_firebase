@@ -34,6 +34,14 @@ class LoginPage extends StatelessWidget {
                   labelText: "Password",
                   border: OutlineInputBorder(),
                 )),
+            Align(
+              child: TextButton(
+                onPressed: () {
+                  Get.toNamed(NameRoute.reset_pass);
+                },
+                child: const Text("Reset Password"),
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),

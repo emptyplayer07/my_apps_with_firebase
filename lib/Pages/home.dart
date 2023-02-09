@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
     final authC = Get.find<AuthController>();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Welcome to the junggle"),
         actions: [
           IconButton(
             onPressed: () {

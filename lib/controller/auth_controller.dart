@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:my_apps_with_firebase_1/Routes/name_route.dart';
 
 class AuthController extends GetxController {
+  /*
+ 
+  */
   FirebaseAuth auth = FirebaseAuth.instance;
 
   //Stream<User?> get streamAuthStatus => auth.authStateChanges();
@@ -93,5 +96,28 @@ class AuthController extends GetxController {
   void logout() async {
     await auth.signOut();
     Get.offAllNamed(NameRoute.login);
+  }
+
+  void resetPassword(String email) async {
+    final user = auth.currentUser;
+    if (email != "" && GetUtils.isEmail(email)) {
+      // if (user != null) {
+      await auth.sendPasswordResetEmail(email: email);
+      Get.defaultDialog(
+        title: "Reset Password",
+        middleText:
+            "Kami telah mengirimkan link reset password ke email $email",
+        onConfirm: () {
+          Get.back();
+          Get.back();
+        },
+        textConfirm: "Ya, saya mengerti",
+      );
+      // } else {
+      //   Get.snackbar("Warning", "Email belum terdaftar");
+      // }
+    } else {
+      Get.snackbar("Warning", "Email tidak valid");
+    }
   }
 }
