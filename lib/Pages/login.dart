@@ -13,6 +13,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login Page"),
+        centerTitle: true,
       ),
       body: SafeArea(
           child: Padding(
@@ -51,18 +52,18 @@ class LoginPage extends StatelessWidget {
               },
               child: const Text("Login"),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("belum punya akun?"),
+                const Text("Belum punya akun?"),
                 TextButton(
                   onPressed: () {
-                    Get.toNamed(NameRoute.register);
+                    Get.offAllNamed(NameRoute.register);
                   },
-                  child: Text("Register"),
+                  child: const Text("Register"),
                 )
               ],
             )

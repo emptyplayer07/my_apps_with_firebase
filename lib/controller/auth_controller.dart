@@ -36,9 +36,15 @@ class AuthController extends GetxController {
         );
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+      if (email == "") {
+        Get.snackbar("Warning", "Email tidak boleh kosong!");
+      } else if (!GetUtils.isEmail(email)) {
+        Get.snackbar("Warning", "Email tidak valid");
+      } else if (password == "") {
+        Get.snackbar("Warning", "Password tidak boleh kosong!");
+      } else if (e.code == 'user-not-found') {
         Get.snackbar(
-          "Email salah",
+          "Email tidak terdaftar",
           "Periksa email anda lagi",
           duration: const Duration(seconds: 2),
         );
@@ -72,7 +78,13 @@ class AuthController extends GetxController {
         textConfirm: "Ya, saya mengerti",
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
+      if (email == "") {
+        Get.snackbar("Warning", "Email tidak boleh kosong!");
+      } else if (!GetUtils.isEmail(email)) {
+        Get.snackbar("Warning", "Email tidak valid");
+      } else if (password == "") {
+        Get.snackbar("Warning", "Password tidak boleh kosong!");
+      } else if (e.code == 'weak-password') {
         Get.snackbar(
           "Warning",
           "Passwordmu terlalu lemah bro..",

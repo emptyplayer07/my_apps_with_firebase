@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_apps_with_firebase_1/Routes/name_route.dart';
 import 'package:my_apps_with_firebase_1/controller/auth_controller.dart';
 import 'package:my_apps_with_firebase_1/controller/textfieldC_register.dart';
 
@@ -12,39 +13,53 @@ class RegisterPage extends StatelessWidget {
     final textC = Get.find<TextfieldControllerRegister>();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Register"),
+        title: const Text("Register"),
         centerTitle: true,
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               TextField(
                 controller: textC.emailC2,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Email",
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TextField(
                 controller: textC.passwordC2,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Password",
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               ElevatedButton(
                 onPressed: () {
                   authC.register(textC.emailC2.text, textC.passwordC2.text);
                 },
-                child: Text("Register"),
+                child: const Text("Register"),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Sudah punya akun?"),
+                  TextButton(
+                      onPressed: () {
+                        Get.offAllNamed(NameRoute.login);
+                      },
+                      child: const Text("Login")),
+                ],
               )
             ],
           ),

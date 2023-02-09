@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_apps_with_firebase_1/Pages/first_page.dart';
 import 'package:my_apps_with_firebase_1/Pages/home.dart';
 import 'package:my_apps_with_firebase_1/Pages/loading.dart';
 import 'package:my_apps_with_firebase_1/Pages/login.dart';
@@ -26,8 +27,6 @@ class MyApp extends StatelessWidget {
   final authC = Get.put(AuthController(), permanent: true);
   @override
   Widget build(BuildContext context) {
-    final textClogin = Get.put(TextfieldControllerLogin());
-    final textCregister = Get.put(TextfieldControllerRegister());
     return StreamBuilder<User?>(
       stream: authC.streamAuthStatus(),
       builder: (context, snapshot) {
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
             //initialRoute: NameRoute.login,
             home: snapshot.data != null && snapshot.data!.emailVerified
                 ? HomePage()
-                : LoginPage(),
+                : FirstPage(),
             getPages: AppRoute.pages,
           );
         }

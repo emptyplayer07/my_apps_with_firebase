@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:my_apps_with_firebase_1/Pages/first_page.dart';
 import 'package:my_apps_with_firebase_1/Pages/home.dart';
 import 'package:my_apps_with_firebase_1/Pages/login.dart';
 import 'package:my_apps_with_firebase_1/Pages/register.dart';
@@ -11,13 +12,17 @@ import '../Bindings/textfieldB_reset_pass.dart';
 class AppRoute extends GetxController {
   static final pages = [
     GetPage(
-      name: NameRoute.login,
-      page: () => LoginPage(),
-      binding: TextfieldBindingLogin(),
+      name: NameRoute.first_page,
+      page: () => FirstPage(),
     ),
     GetPage(
       name: NameRoute.home,
       page: () => const HomePage(),
+    ),
+    GetPage(
+      name: NameRoute.login,
+      page: () => LoginPage(),
+      binding: TextfieldBindingLogin(),
     ),
     GetPage(
         name: NameRoute.register,
