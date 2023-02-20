@@ -31,7 +31,6 @@ class HomePage extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               var listDataUser = snapshot.data!.docs;
-              print(listDataUser);
               return ListView.builder(
                 itemCount: listDataUser.length,
                 itemBuilder: (context, index) {
@@ -42,7 +41,12 @@ class HomePage extends StatelessWidget {
                         "${(listDataUser[index].data() as Map<String, dynamic>)["name"]}"),
                     subtitle: Text(
                         "${(listDataUser[index].data() as Map<String, dynamic>)["telp"]}"),
-                    trailing: Icon(Icons.delete),
+                    trailing: IconButton(
+                      onPressed: () {
+                        cloudFirestoreC.deleteData(listDataUser[index].id);
+                      },
+                      icon: Icon(Icons.delete),
+                    ),
                   );
                 },
               );

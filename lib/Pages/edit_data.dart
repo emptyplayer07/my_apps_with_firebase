@@ -1,14 +1,21 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:my_apps_with_firebase_1/controller/Textfield/textfieldC_edit_data.dart';
 import 'package:my_apps_with_firebase_1/controller/cloud_firestore_controller.dart';
 
-class EditDataPage extends StatelessWidget {
+class EditDataPage extends StatefulWidget {
   const EditDataPage({super.key});
 
+  @override
+  State<EditDataPage> createState() => _EditDataPageState();
+}
+
+class _EditDataPageState extends State<EditDataPage> {
   @override
   Widget build(BuildContext context) {
     final textC = Get.find<TextfieldEditDataController>();
@@ -22,15 +29,15 @@ class EditDataPage extends StatelessWidget {
         future: cloudFirestoreC.getDataById(Get.arguments),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            // print(cloudFirestoreC.getDataById(Get.arguments));
-            // inspect(snapshot.data!.data() as Map<String, dynamic>);
-            print(snapshot.data!.data());
             var data = snapshot.data!.data() as Map<String, dynamic>;
-
+            var temp = 0.obs;
             textC.name.text = data["name"];
             textC.telp.text = data["telp"];
-            textC.birthday.text = data["birthday"];
             textC.email.text = data["email"];
+            if (temp == 0) {
+              textC.birthday.text = data["birthday"];
+            }
+
             return SafeArea(
                 child: Padding(
               padding: EdgeInsets.all(10),
@@ -58,10 +65,31 @@ class EditDataPage extends StatelessWidget {
                   ),
                   TextField(
                     controller: textC.birthday,
+                    keyboardType: TextInputType.datetime,
                     decoration: InputDecoration(
                       labelText: "Birthday",
                       border: OutlineInputBorder(),
                     ),
+                    readOnly: true,
+                    onTap: () async {
+                      var editDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2200),
+                      );
+
+                      if (editDate != null) {
+                        String formatNewDate1 =
+                            DateFormat.yMd().format(editDate);
+
+                        setState(() {
+                          textC.birthday.text = formatNewDate1;
+                          temp = 1.obs;
+                          print(textC.birthday.text);
+                        });
+                      }
+                    },
                   ),
                   SizedBox(
                     height: 10,
@@ -77,7 +105,14 @@ class EditDataPage extends StatelessWidget {
                     height: 10,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      cloudFirestoreC.editData(
+                          Get.arguments,
+                          textC.name.text,
+                          textC.telp.text,
+                          textC.birthday.text,
+                          textC.email.text);
+                    },
                     child: Text("Save"),
                   )
                 ],

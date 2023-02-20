@@ -51,6 +51,55 @@ class CloudFirestoreController extends GetxController {
     }
   }
 
+  //edit data
+  void editData(String docID, String name, String telp, String birthday,
+      String email) async {
+    DocumentReference docData =
+        firestore.collection("${getDataUser()}").doc(docID);
+    try {
+      await docData.update({
+        "name": name,
+        "telp": telp,
+        "birthday": birthday,
+        "email": email,
+      });
+
+      Get.defaultDialog(
+          title: "Mantap",
+          middleText: "Data sudah di edit",
+          onConfirm: () {
+            Get.back();
+            Get.back();
+          },
+          textConfirm: "Ya, saya mengerti");
+    } catch (e) {
+      Get.defaultDialog(title: "Warning", middleText: "Gagal edit data");
+    }
+  }
+
+  //delete data
+  void deleteData(String docID) {
+    DocumentReference docData =
+        firestore.collection("${getDataUser()}").doc(docID);
+    try {
+      Get.defaultDialog(
+        title: "Warning",
+        middleText: "Apakah anda yakin untuk hapus data?",
+        onConfirm: () async {
+          await docData.delete();
+          Get.back();
+        },
+        textConfirm: "Yes",
+        textCancel: "No",
+      );
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Warning",
+        middleText: "Gagal hapus data",
+      );
+    }
+  }
+
   //read data by user with email
   Stream<QuerySnapshot<Object?>> readDataByUser() {
     CollectionReference userData = firestore.collection("${getDataUser()}");
