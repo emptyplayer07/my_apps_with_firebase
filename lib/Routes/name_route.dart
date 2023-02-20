@@ -6,4 +6,5 @@ abstract class NameRoute {
   static const reset_pass = "/reset_password";
   static const add_data = "/add_data";
   static const profile = "/profile";
+  static const edit_data = "/edit_data";
 }

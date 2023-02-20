@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_apps_with_firebase_1/Routes/name_route.dart';
 import 'package:my_apps_with_firebase_1/controller/auth_controller.dart';
-import 'package:my_apps_with_firebase_1/controller/textfieldC_register.dart';
+import 'package:my_apps_with_firebase_1/controller/Textfield/textfieldC_register.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});

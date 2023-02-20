@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_apps_with_firebase_1/Routes/name_route.dart';
 import 'package:my_apps_with_firebase_1/controller/auth_controller.dart';
+import 'package:my_apps_with_firebase_1/controller/cloud_firestore_controller.dart';
 import 'package:my_apps_with_firebase_1/controller/page_index_controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,6 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authC = Get.find<AuthController>();
     final pageIndexC = Get.find<PageIndexController>();
+    final cloudFirestoreC = Get.put(CloudFirestoreController());
     pageIndexC.pageIndex.value = 0;
     return Scaffold(
       appBar: AppBar(
@@ -22,9 +26,29 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: Center(
-        child: Text("Belum ada data"),
-      ),
+      body: StreamBuilder(
+          stream: cloudFirestoreC.readDataByUser(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              var listDataUser = snapshot.data!.docs;
+              print(listDataUser);
+              return ListView.builder(
+                itemCount: listDataUser.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () => Get.toNamed(NameRoute.edit_data,
+                        arguments: listDataUser[index].id),
+                    title: Text(
+                        "${(listDataUser[index].data() as Map<String, dynamic>)["name"]}"),
+                    subtitle: Text(
+                        "${(listDataUser[index].data() as Map<String, dynamic>)["telp"]}"),
+                    trailing: Icon(Icons.delete),
+                  );
+                },
+              );
+            }
+            return const Center(child: CircularProgressIndicator());
+          }),
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(

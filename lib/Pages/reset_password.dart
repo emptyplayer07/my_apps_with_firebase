@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_apps_with_firebase_1/controller/auth_controller.dart';
 
-import '../controller/textfieldC_reset_password.dart';
+import '../controller/Textfield/textfieldC_reset_password.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   const ResetPasswordPage({super.key});
