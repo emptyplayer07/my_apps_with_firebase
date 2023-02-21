@@ -6,6 +6,8 @@ class TextfieldEditDataController extends GetxController {
   late TextEditingController telp;
   late TextEditingController birthday;
   late TextEditingController email;
+  late var temp = 0.obs;
+  late var temp2 = "".obs;
 
   @override
   void onInit() {

@@ -30,12 +30,14 @@ class _EditDataPageState extends State<EditDataPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             var data = snapshot.data!.data() as Map<String, dynamic>;
-            var temp = 0.obs;
             textC.name.text = data["name"];
             textC.telp.text = data["telp"];
             textC.email.text = data["email"];
-            if (temp == 0) {
+
+            if (textC.temp == 0) {
               textC.birthday.text = data["birthday"];
+            } else {
+              textC.birthday.text = textC.temp2.string;
             }
 
             return SafeArea(
@@ -82,11 +84,11 @@ class _EditDataPageState extends State<EditDataPage> {
                       if (editDate != null) {
                         String formatNewDate1 =
                             DateFormat.yMd().format(editDate);
+                        textC.temp2 = formatNewDate1.obs;
 
                         setState(() {
-                          textC.birthday.text = formatNewDate1;
-                          temp = 1.obs;
-                          print(textC.birthday.text);
+                          textC.birthday.text = textC.temp2.string;
+                          textC.temp = 1.obs;
                         });
                       }
                     },
