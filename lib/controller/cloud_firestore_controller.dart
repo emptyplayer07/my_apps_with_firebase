@@ -25,6 +25,7 @@ class CloudFirestoreController extends GetxController {
     String birthday,
     String email,
   ) async {
+    String dateNow = DateTime.now().toIso8601String();
     try {
       CollectionReference addDataByUser =
           firestore.collection("${getDataUser()}");
@@ -33,6 +34,7 @@ class CloudFirestoreController extends GetxController {
         "telp": telp,
         "birthday": birthday,
         "email": email,
+        "created_at": dateNow,
       });
 
       Get.defaultDialog(
