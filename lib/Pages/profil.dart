@@ -28,12 +28,17 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipOval(
-              child: Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.amber,
-                  child: Icon(Icons.person)),
+            GestureDetector(
+              child: ClipOval(
+                child: Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.amber,
+                    child: Icon(Icons.person)),
+              ),
+              onTap: () {
+                Get.defaultDialog(title: "Succes");
+              },
             ),
             SizedBox(
               height: 20,

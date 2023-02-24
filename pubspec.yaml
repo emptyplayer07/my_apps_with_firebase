@@ -31,13 +31,16 @@ dependencies:
   cloud_firestore: ^4.3.2
   convex_bottom_bar: ^3.2.0
   cupertino_icons: ^1.0.2
+  file_picker: ^5.2.5
   firebase_app_check: ^0.1.1+8
   firebase_auth: ^4.2.4
   firebase_core: ^2.4.1
-  intl: ^0.17.0
+  firebase_storage: ^11.0.14
   flutter:
     sdk: flutter
   get: ^4.6.5
+  image_picker: ^0.8.6+3
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
