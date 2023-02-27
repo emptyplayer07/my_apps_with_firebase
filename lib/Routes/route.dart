@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:my_apps_with_firebase_1/Bindings/Textfield/textfieldB_add_data.dart';
+import 'package:my_apps_with_firebase_1/Bindings/cloud_storageB.dart';
 import 'package:my_apps_with_firebase_1/Pages/add_data.dart';
 import 'package:my_apps_with_firebase_1/Pages/edit_data.dart';
 import 'package:my_apps_with_firebase_1/Pages/first_page.dart';
@@ -38,12 +39,14 @@ class AppRoute extends GetxController {
       transition: Transition.rightToLeft,
     ),
     GetPage(
-        name: NameRoute.reset_pass,
-        page: () => const ResetPasswordPage(),
-        binding: TextfieldResetPasswordBinding()),
+      name: NameRoute.reset_pass,
+      page: () => const ResetPasswordPage(),
+      binding: TextfieldResetPasswordBinding(),
+    ),
     GetPage(
       name: NameRoute.profile,
       page: () => ProfilePage(),
+      binding: CloudStorageBinding(),
       transition: Transition.fadeIn,
     ),
     GetPage(
