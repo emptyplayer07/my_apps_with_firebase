@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as namefile;
 
 class CloudStorageController extends GetxController {
   final storageRef = storage.FirebaseStorage.instance.ref();
@@ -21,7 +21,7 @@ class CloudStorageController extends GetxController {
   Future<String> uploadImage() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    String filename = basename(image!.path.toString());
+    String filename = namefile.basename(image!.path.toString());
     final storage.Reference firebaseStorageRef = storage
         .FirebaseStorage.instance
         .ref()
@@ -30,7 +30,8 @@ class CloudStorageController extends GetxController {
 
     await firebaseStorageRef.putData(await image.readAsBytes());
 
-    String v = await firebaseStorageRef.getDownloadURL();
+    //String v = await firebaseStorageRef.getDownloadURL();
+    String v = "succes";
     return v;
   }
 
@@ -39,13 +40,16 @@ class CloudStorageController extends GetxController {
         .child("${getDataUser()}/image profile/true")
         .getDownloadURL();
     print(imageUrl);
+    print("${imageUrl.runtimeType}");
     return imageUrl;
   }
 
   cekData() async {
     final cek = await storageRef;
     // // await storageRef.child("files/uid");
-    final listResult = await storageRef.listAll();
+    final listResult =
+        await storageRef.child("${getDataUser()}/image profile/").listAll();
+    print("cekdata");
     return listResult.items.length;
     // for (var prefix in listResult.prefixes) {
     //   prefix.fullPath;
