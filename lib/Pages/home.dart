@@ -32,22 +32,22 @@ class HomePage extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.active) {
               var listDataUser = snapshot.data!.docs;
 
-              //var listDataUser2 = listDataUser[]
-              print(listDataUser);
+              var listDataUser2 = listDataUser.sublist(1, listDataUser.length);
+              // print(listDataUser);
               return ListView.builder(
-                itemCount: listDataUser.length,
+                itemCount: listDataUser2.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: () => Get.toNamed(NameRoute.edit_data,
-                        arguments: listDataUser[index].id),
+                        arguments: listDataUser2[index].id),
                     title: Text(
-                        "${(listDataUser[index].data() as Map<String, dynamic>)["name"]}"),
+                        "${(listDataUser2[index].data() as Map<String, dynamic>)["name"]}"),
                     subtitle: Text(
                         //"${(listDataUser[index].data() as Map<String, dynamic>)["telp"]}"
-                        "$listDataUser"),
+                        "$listDataUser2"),
                     trailing: IconButton(
                       onPressed: () {
-                        cloudFirestoreC.deleteData(listDataUser[index].id);
+                        cloudFirestoreC.deleteData(listDataUser2[index].id);
                       },
                       icon: Icon(Icons.delete),
                     ),
