@@ -78,11 +78,6 @@ class CloudFirestoreController extends GetxController {
       await docData.update({
         "imgUrl": imgUrl,
       });
-      Get.defaultDialog(
-        title: "Succes",
-        onConfirm: () => Get.back(),
-        textConfirm: "Berhasil",
-      );
     } catch (e) {
       Get.defaultDialog(
         title: "Warning",

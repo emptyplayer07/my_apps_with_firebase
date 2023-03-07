@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_apps_with_firebase_1/Routes/name_route.dart';
-import 'package:my_apps_with_firebase_1/controller/auth_controller.dart';
 import 'package:my_apps_with_firebase_1/controller/cloud_firestore_controller.dart';
 import 'package:my_apps_with_firebase_1/controller/page_index_controller.dart';
 
@@ -12,17 +10,16 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authC = Get.find<AuthController>();
     final pageIndexC = Get.find<PageIndexController>();
     final cloudFirestoreC = Get.put(CloudFirestoreController());
     pageIndexC.pageIndex.value = 0;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome to the junggle"),
+        title: const Text("Welcome to the junggle"),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.info),
+            icon: const Icon(Icons.info),
           )
         ],
       ),
@@ -31,25 +28,30 @@ class HomePage extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               var listDataUser = snapshot.data!.docs;
+              if (listDataUser.isNotEmpty) {
+                var listDataUser2 =
+                    listDataUser.sublist(1, listDataUser.length);
+              }
+              //var listDataUser2 = listDataUser.sublist(1, listDataUser.length);
 
-              var listDataUser2 = listDataUser.sublist(1, listDataUser.length);
-              // print(listDataUser);
               return ListView.builder(
-                itemCount: listDataUser2.length,
+                itemCount: listDataUser.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: () => Get.toNamed(NameRoute.edit_data,
-                        arguments: listDataUser2[index].id),
+                        arguments: listDataUser[index].id),
+                    leading: CircleAvatar(
+                      child: Icon(Icons.person),
+                    ),
                     title: Text(
-                        "${(listDataUser2[index].data() as Map<String, dynamic>)["name"]}"),
+                        "${(listDataUser[index].data() as Map<String, dynamic>)["name"]}"),
                     subtitle: Text(
-                        //"${(listDataUser[index].data() as Map<String, dynamic>)["telp"]}"
-                        "$listDataUser2"),
+                        "${(listDataUser[index].data() as Map<String, dynamic>)["telp"]}"),
                     trailing: IconButton(
                       onPressed: () {
-                        cloudFirestoreC.deleteData(listDataUser2[index].id);
+                        cloudFirestoreC.deleteData(listDataUser[index].id);
                       },
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                     ),
                   );
                 },
@@ -58,16 +60,17 @@ class HomePage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }),
       bottomNavigationBar: ConvexAppBar(
+        // ignore: prefer_const_literals_to_create_immutables
         items: [
-          TabItem(
+          const TabItem(
             icon: Icon(Icons.home),
             title: "Home",
           ),
-          TabItem(
+          const TabItem(
             icon: Icon(Icons.add),
             title: "Add Data",
           ),
-          TabItem(
+          const TabItem(
             icon: Icon(Icons.person),
             title: "Profile",
           ),

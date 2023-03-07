@@ -12,7 +12,7 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authC = Get.find<AuthController>();
     final textC = Get.find<TextfieldControllerRegister>();
-    final storageC = Get.put(CloudFirestoreController());
+    final cloudC = Get.put(CloudFirestoreController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register"),
@@ -47,7 +47,7 @@ class RegisterPage extends StatelessWidget {
                 onPressed: () async {
                   await authC.register(
                       textC.emailC2.text, textC.passwordC2.text);
-                  storageC.addDataProfile(" ", " ");
+                  //cloudC.addDataProfile(" ", " ");
                 },
                 child: const Text("Register"),
               ),

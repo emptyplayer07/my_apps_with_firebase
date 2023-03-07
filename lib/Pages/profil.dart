@@ -26,13 +26,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile"),
+        title: const Text("Profile"),
         actions: [
           IconButton(
             onPressed: () {
               authC.logout();
             },
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           )
         ],
       ),
@@ -43,33 +43,28 @@ class _ProfilePageState extends State<ProfilePage> {
               var listDataUser = snapshot.data!.docs;
               var imgUrl =
                   (listDataUser[0].data() as Map<String, dynamic>)['imgUrl'];
-              print(imgUrl);
+              var name =
+                  (listDataUser[0].data() as Map<String, dynamic>)['name'];
               return Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       imgUrl != " "
-                          //    listDataUser.id.contains('a') == ""
                           ? GestureDetector(
                               child: ClipOval(
                                 child: Container(
-                                    width: 100,
-                                    height: 100,
+                                    width: 200,
+                                    height: 200,
                                     color: Colors.amber,
-                                    child: Container(
+                                    child: SizedBox(
                                         width: 100,
                                         height: 100,
-                                        //child: Image.network(),
                                         child: Image.network(
                                           imgUrl,
                                           fit: BoxFit.cover,
                                         ))),
-                                // child: Icon(Icons.person)))
-                                //child: Image.network("")),
                               ),
                               onTap: () async {
-                                //print(storegeC.getUserProfile().toString());
-                                //imgPath = await storegeC.uploadImage();
                                 await storageC.uploadImage();
                                 imgPath = await storageC.getUserProfile();
                                 cloudC.editDataProfile("a", imgPath);
@@ -79,48 +74,46 @@ class _ProfilePageState extends State<ProfilePage> {
                           : GestureDetector(
                               child: ClipOval(
                                 child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    color: Colors.amber,
-                                    //child: Image.network(),
-                                    child: Icon(Icons.abc)),
+                                    width: 200,
+                                    height: 200,
+                                    color: Colors.black12,
+                                    child: const Icon(
+                                      Icons.person,
+                                      size: 100,
+                                    )),
                               ),
                               onTap: () async {
-                                //print(storegeC.getUserProfile());
-                                //imgPath = await storegeC.uploadImage();
                                 await storageC.uploadImage();
                                 imgPath = await storageC.getUserProfile();
                                 cloudC.editDataProfile("a", imgPath);
                                 setState(() {});
                               },
                             ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
+                      Text("$name"),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text("${authC.getDataUser()}"),
-                      ElevatedButton(
-                          onPressed: () async {
-                            var coba = await cloudC.readUserProfile();
-                            //var =
-                            print(coba);
-                          },
-                          child: Text("test")),
                     ]),
               );
             }
             return const Center(child: CircularProgressIndicator());
           }),
       bottomNavigationBar: ConvexAppBar(
+        // ignore: prefer_const_literals_to_create_immutables
         items: [
-          TabItem(
+          const TabItem(
             icon: Icon(Icons.home),
             title: "Home",
           ),
-          TabItem(
+          const TabItem(
             icon: Icon(Icons.add),
             title: "Add Data",
           ),
-          TabItem(
+          const TabItem(
             icon: Icon(Icons.person),
             title: "Profile",
           ),
