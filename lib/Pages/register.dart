@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:my_apps_with_firebase_1/Routes/name_route.dart';
 import 'package:my_apps_with_firebase_1/controller/auth_controller.dart';
 import 'package:my_apps_with_firebase_1/controller/Textfield/textfieldC_register.dart';
+import 'package:my_apps_with_firebase_1/controller/cloud_firestore_controller.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -11,6 +12,7 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final authC = Get.find<AuthController>();
     final textC = Get.find<TextfieldControllerRegister>();
+    final storageC = Get.put(CloudFirestoreController());
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register"),
@@ -42,8 +44,10 @@ class RegisterPage extends StatelessWidget {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {
-                  authC.register(textC.emailC2.text, textC.passwordC2.text);
+                onPressed: () async {
+                  await authC.register(
+                      textC.emailC2.text, textC.passwordC2.text);
+                  storageC.addDataProfile(" ", " ");
                 },
                 child: const Text("Register"),
               ),

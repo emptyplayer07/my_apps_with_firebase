@@ -1,4 +1,3 @@
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,21 +5,13 @@ import 'package:get/get.dart';
 import 'package:my_apps_with_firebase_1/Pages/first_page.dart';
 import 'package:my_apps_with_firebase_1/Pages/home.dart';
 import 'package:my_apps_with_firebase_1/Pages/loading.dart';
-import 'package:my_apps_with_firebase_1/Pages/login.dart';
-import 'package:my_apps_with_firebase_1/Routes/name_route.dart';
 import 'package:my_apps_with_firebase_1/Routes/route.dart';
 import 'package:my_apps_with_firebase_1/controller/auth_controller.dart';
 import 'package:my_apps_with_firebase_1/controller/page_index_controller.dart';
-import 'package:my_apps_with_firebase_1/controller/Textfield/textfieldC_login.dart';
-import 'package:my_apps_with_firebase_1/controller/Textfield/textfieldC_register.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // await FirebaseAppCheck.instance.activate(
-  //   webRecaptchaSiteKey: 'recaptcha-v3-site-key',
-  // );
-
   runApp(MyApp());
 }
 
@@ -35,15 +26,16 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
             title: "Apps",
             //initialRoute: NameRoute.login,
             home: snapshot.data != null && snapshot.data!.emailVerified
-                ? HomePage()
-                : FirstPage(),
+                ? const HomePage()
+                : const FirstPage(),
             getPages: AppRoute.pages,
           );
         }
-        return Loading();
+        return const Loading();
       },
     );
   }

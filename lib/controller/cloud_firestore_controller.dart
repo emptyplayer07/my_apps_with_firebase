@@ -18,7 +18,7 @@ class CloudFirestoreController extends GetxController {
     return docRef.doc(docID).get();
   }
 
-  //fungsi tambah data
+  //add data contact
   void addData(
     String name,
     String telp,
@@ -53,6 +53,44 @@ class CloudFirestoreController extends GetxController {
     }
   }
 
+  //add data user profile
+  void addDataProfile(String name, String imgUrl) async {
+    try {
+      CollectionReference addUserProfile =
+          firestore.collection("${getDataUser()}");
+
+      addUserProfile.doc('a').set({
+        "name": name,
+        "imgUrl": imgUrl,
+      });
+
+      print("succes add data profile");
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //edit data profile
+  void editDataProfile(String docId, String imgUrl) async {
+    DocumentReference docData =
+        firestore.collection("${getDataUser()}").doc(docId);
+    try {
+      await docData.update({
+        "imgUrl": imgUrl,
+      });
+      Get.defaultDialog(
+        title: "Succes",
+        onConfirm: () => Get.back(),
+        textConfirm: "Berhasil",
+      );
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Warning",
+        middleText: "Gagal edit data",
+      );
+    }
+  }
+
   //edit data
   void editData(String docID, String name, String telp, String birthday,
       String email) async {
@@ -78,6 +116,11 @@ class CloudFirestoreController extends GetxController {
       Get.defaultDialog(title: "Warning", middleText: "Gagal edit data");
     }
   }
+
+  //edit image profile
+  // void editImageProfile(String imgUrl) {
+  //   DocumentReference docData = firestore.collection("${getDataUser}").doc()
+  // }
 
   //delete data
   void deleteData(String docID) {
@@ -105,6 +148,14 @@ class CloudFirestoreController extends GetxController {
   //read data by user with email
   Stream<QuerySnapshot<Object?>> readDataByUser() {
     CollectionReference userData = firestore.collection("${getDataUser()}");
+    return userData.snapshots();
+  }
+
+  //get data user profile
+  Stream<DocumentSnapshot<Object?>> readUserProfile() {
+    DocumentReference userData =
+        firestore.collection("${getDataUser()}").doc("a");
+    print(userData);
     return userData.snapshots();
   }
 }

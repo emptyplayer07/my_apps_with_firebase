@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
 import 'package:get/get.dart';
@@ -46,30 +43,9 @@ class CloudStorageController extends GetxController {
 
   cekData() async {
     final cek = await storageRef;
-    // // await storageRef.child("files/uid");
     final listResult =
         await storageRef.child("${getDataUser()}/image profile/").listAll();
     print("cekdata");
     return listResult.items.length;
-    // for (var prefix in listResult.prefixes) {
-    //   prefix.fullPath;
-    //   print("$prefix  prefix");
-    //   print("assu");
-    // }
-    // for (var item in listResult.items) {
-    //   print("$item item");
-    //   print("assu");
-    //   // The items under storageRef.
-    // }
-    // print("$cek 1");
-    //return cek;
-
-    // final cek = storageRef;
-    // try {
-    //   final listResult = await cek.listAll();
-    // } on FirebaseException catch (e) {
-    //   // Caught an exception from Firebase.
-    //   return print("Failed with error '${e.code}': ${e.message}");
-    // }
   }
 }
