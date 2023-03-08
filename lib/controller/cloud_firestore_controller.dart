@@ -57,9 +57,9 @@ class CloudFirestoreController extends GetxController {
   void addDataProfile(String name, String imgUrl) async {
     try {
       CollectionReference addUserProfile =
-          firestore.collection("${getDataUser()}");
+          firestore.collection("${getDataUser()}(user)");
 
-      addUserProfile.doc('a').set({
+      addUserProfile.doc('user').set({
         "name": name,
         "imgUrl": imgUrl,
       });
@@ -73,7 +73,7 @@ class CloudFirestoreController extends GetxController {
   //edit data profile
   void editDataProfile(String docId, String imgUrl) async {
     DocumentReference docData =
-        firestore.collection("${getDataUser()}").doc(docId);
+        firestore.collection("${getDataUser()}(user)").doc(docId);
     try {
       await docData.update({
         "imgUrl": imgUrl,
@@ -149,8 +149,7 @@ class CloudFirestoreController extends GetxController {
   //get data user profile
   Stream<DocumentSnapshot<Object?>> readUserProfile() {
     DocumentReference userData =
-        firestore.collection("${getDataUser()}").doc("a");
-    print(userData);
+        firestore.collection("${getDataUser()}(user)").doc("user");
     return userData.snapshots();
   }
 }

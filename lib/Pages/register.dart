@@ -47,7 +47,7 @@ class RegisterPage extends StatelessWidget {
                 onPressed: () async {
                   await authC.register(
                       textC.emailC2.text, textC.passwordC2.text);
-                  //cloudC.addDataProfile(" ", " ");
+                  cloudC.addDataProfile(" ", " ");
                 },
                 child: const Text("Register"),
               ),

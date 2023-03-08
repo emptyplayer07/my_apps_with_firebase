@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final cloudC = Get.put(CloudFirestoreController());
     final storageC = Get.find<CloudStorageController>();
 
-    String imgPath;
+    String imgPath = " ";
 
     return Scaffold(
       appBar: AppBar(
@@ -37,37 +37,39 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
       body: StreamBuilder(
-          stream: cloudC.readDataByUser(),
+          stream: cloudC.readUserProfile(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
-              var listDataUser = snapshot.data!.docs;
+              var listDataUser = snapshot.data!;
+              print(listDataUser);
               var imgUrl =
-                  (listDataUser[0].data() as Map<String, dynamic>)['imgUrl'];
-              var name =
-                  (listDataUser[0].data() as Map<String, dynamic>)['name'];
+                  (listDataUser.data() as Map<String, dynamic>)['imgUrl'];
+              var name = (listDataUser.data() as Map<String, dynamic>)['name'];
               return Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      //imgPath != " "
                       imgUrl != " "
                           ? GestureDetector(
                               child: ClipOval(
                                 child: Container(
                                     width: 200,
                                     height: 200,
-                                    color: Colors.amber,
+                                    color: Colors.black12,
                                     child: SizedBox(
                                         width: 100,
                                         height: 100,
                                         child: Image.network(
                                           imgUrl,
+                                          //imgPath,
                                           fit: BoxFit.cover,
                                         ))),
                               ),
                               onTap: () async {
                                 await storageC.uploadImage();
                                 imgPath = await storageC.getUserProfile();
-                                cloudC.editDataProfile("a", imgPath);
+                                cloudC.editDataProfile("user", imgPath);
                                 setState(() {});
                               },
                             )
@@ -85,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               onTap: () async {
                                 await storageC.uploadImage();
                                 imgPath = await storageC.getUserProfile();
-                                cloudC.editDataProfile("a", imgPath);
+                                cloudC.editDataProfile("user", imgPath);
                                 setState(() {});
                               },
                             ),
