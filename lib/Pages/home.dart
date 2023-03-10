@@ -28,19 +28,20 @@ class HomePage extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               var listDataUser = snapshot.data!.docs;
-              if (listDataUser.isNotEmpty) {
-                var listDataUser2 =
-                    listDataUser.sublist(1, listDataUser.length);
-              }
+              // ide dari wendi jangan dihapus
+              // if (listDataUser.isNotEmpty) {
+              //   var listDataUser2 =
+              //       listDataUser.sublist(1, listDataUser.length);
+              // }
               //var listDataUser2 = listDataUser.sublist(1, listDataUser.length);
-
+              //==========
               return ListView.builder(
                 itemCount: listDataUser.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: () => Get.toNamed(NameRoute.edit_data,
                         arguments: listDataUser[index].id),
-                    leading: CircleAvatar(
+                    leading: const CircleAvatar(
                       child: Icon(Icons.person),
                     ),
                     title: Text(
