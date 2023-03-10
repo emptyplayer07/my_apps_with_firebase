@@ -21,10 +21,6 @@ class _EditDataPageState extends State<EditDataPage> {
     final textC = Get.find<TextfieldEditDataController>();
     final cloudFirestoreC = Get.find<CloudFirestoreController>();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit Data"),
-        centerTitle: true,
-      ),
       body: FutureBuilder<DocumentSnapshot<Object?>>(
         future: cloudFirestoreC.getDataById(Get.arguments),
         builder: (context, snapshot) {
@@ -42,33 +38,44 @@ class _EditDataPageState extends State<EditDataPage> {
 
             return SafeArea(
                 child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
+                  const Center(
+                      child: Text(
+                    "Edit Data",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   TextField(
                     controller: textC.name,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Name",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextField(
                     controller: textC.telp,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Number Telephone",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextField(
                     controller: textC.birthday,
                     keyboardType: TextInputType.datetime,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Birthday",
                       border: OutlineInputBorder(),
                     ),
@@ -93,17 +100,17 @@ class _EditDataPageState extends State<EditDataPage> {
                       }
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextField(
                     controller: textC.email,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Email",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   ElevatedButton(
@@ -115,7 +122,7 @@ class _EditDataPageState extends State<EditDataPage> {
                           textC.birthday.text,
                           textC.email.text);
                     },
-                    child: Text("Save"),
+                    child: const Text("Save"),
                   )
                 ],
               ),

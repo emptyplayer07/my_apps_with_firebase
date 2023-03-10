@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
     pageIndexC.pageIndex.value = 0;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome to the junggle"),
+        title: Center(child: const Text("List Data")),
         actions: [
           IconButton(
             onPressed: () {},
@@ -42,6 +42,8 @@ class HomePage extends StatelessWidget {
                     onTap: () => Get.toNamed(NameRoute.edit_data,
                         arguments: listDataUser[index].id),
                     leading: const CircleAvatar(
+                      backgroundColor: Colors.black,
+                      radius: 25,
                       child: Icon(Icons.person),
                     ),
                     title: Text(

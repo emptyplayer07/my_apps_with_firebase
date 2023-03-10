@@ -14,15 +14,22 @@ class RegisterPage extends StatelessWidget {
     final textC = Get.find<TextfieldControllerRegister>();
     final cloudC = Get.put(CloudFirestoreController());
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Register"),
-        centerTitle: true,
-      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: [
+              Center(
+                  child: Text(
+                "Register",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
+              SizedBox(
+                height: 30,
+              ),
               TextField(
                 controller: textC.emailC2,
                 decoration: const InputDecoration(

@@ -20,14 +20,21 @@ class _AddDataPageState extends State<AddDataPage> {
     final textC = Get.find<TextfieldControllerAddData>();
     final addDataC = Get.put(CloudFirestoreController());
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Data"),
-      ),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
+            const Text(
+              "Tambah Data",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
             TextField(
               controller: textC.name,
               keyboardType: TextInputType.name,

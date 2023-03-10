@@ -11,15 +11,21 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login Page"),
-        centerTitle: true,
-      ),
       body: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(30),
         child: Column(
           children: [
+            const Text(
+              "Login",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
             TextField(
                 controller: textC.emailC,
                 decoration: const InputDecoration(
@@ -27,7 +33,7 @@ class LoginPage extends StatelessWidget {
                   border: OutlineInputBorder(),
                 )),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             TextField(
                 controller: textC.passwordC,
